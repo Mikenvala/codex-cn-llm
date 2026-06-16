@@ -1,0 +1,23 @@
+先安装提供的软件并打开，也可自己去官网下载dmg安装包
+然后双击codex-setup.command文件开启终端页面进行配置。
+
+【模型列表 - MiniMax 优先】
+M1=MiniMax-M3（全新旗舰），M2=MiniMax-M2.7，M3-M8 依次排列
+默认选中 M1（MiniMax-M3），直接回车即可
+
+【MiniMax Think Filter】
+Mac 脚本已内置 think-filter，自动处理：
+- 去除 <think> / <thought> 思考标签（跨流式事件）
+- 去除 reasoning_content 等内部字段
+- 强制使用中文输出
+- 禁用推理思考模式（减少静默等待）
+
+【关于 MiniMax M3 速度】
+MiniMax M3 是推理模型，内部思考阶段不输出任何内容：
+- 简单问题：约 6-7 秒出第一个字
+- 复杂问题：可能 10-30 秒静默思考
+- 非卡死！请耐心等待，思考结束会自动出结果
+
+如需要快速响应，推荐使用：
+- M3（MiniMax-M2.7-highspeed）：速度快 2-3 倍
+- 或其他非推理模型

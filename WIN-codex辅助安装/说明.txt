@@ -1,0 +1,27 @@
+先安装 Codex Installer.exe，也可去官网下载安装包
+然后以管理员身份运行 Codex Complete Setup.bat 进行配置
+
+【模型列表 - MiniMax 优先】
+M1=MiniMax-M3（全新旗舰），M2=MiniMax-M2.7，M3-M8 依次排列
+默认选中 M1（MiniMax-M3），直接回车即可
+
+【MiniMax Think Filter（Windows）】
+需要手动启动 filter：
+1. 确保已安装 Python 3
+2. 在 setup 目录运行：
+   python think_filter.py --port 4447 --backend http://127.0.0.1:4446
+3. 修改 %USERPROFILE%\.codex\config.toml 中 base_url 指向 4447 端口
+
+Filter 功能：
+- 去除 <think> / <thought> 思考标签
+- 去除 reasoning_content 等内部字段
+- 强制使用中文输出
+- 禁用推理思考模式
+
+【关于 MiniMax M3 速度】
+MiniMax M3 是推理模型，内部思考阶段不输出任何内容：
+- 简单问题：约 6-7 秒出第一个字
+- 复杂问题：可能 10-30 秒静默思考
+- 非卡死！请耐心等待
+
+如需要快速响应，推荐 M3（MiniMax-M2.7-highspeed）速度快 2-3 倍
