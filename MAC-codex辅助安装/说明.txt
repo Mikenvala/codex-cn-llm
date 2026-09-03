@@ -1,0 +1,52 @@
+先安装提供的软件并打开，也可自己去官网下载 dmg 安装包
+然后双击 codex-setup.command 文件开启终端页面进行配置。
+
+【支持的厂商与模型】
+DeepSeek:  D1=deepseek-v4-pro（旗舰） D2=deepseek-v4-flash（次旗舰） D3=deepseek-v4-flash-vision-exp（视觉理解）
+Qwen:      Q1=qwen3.8-max（旗舰）    Q2=qwen3.7-max（次旗舰）
+Kimi:      K1=kimi-k3（旗舰）        K2=kimi-k2.7-code（代码专精）
+GLM:       G1=glm-5.3（Coding Plan 套餐旗舰）     G2=glm-5.3（标准 API 按量，普通 Key）
+           G3=glm-5.3-flash（Coding Plan 多模态轻量）   G4=glm-5.3-flash（标准 API 按量，支持图片）
+           （GLM 按模型大小排序：5.3 套餐/标准 > 5.3-flash 套餐/标准）
+MiniMax:   M1=MiniMax-M3（旗舰）     M2=MiniMax-M2.7（次旗舰）
+           M3/M4 为对应 Token Plan 订阅版（tp- 开头 Key）
+小米 MiMo: X1=mimo-v2.5-pro（旗舰）  X2=mimo-v2.5（次旗舰）
+           X3/X4 为对应 Token Plan 订阅版（走专属网关 token-plan-cn.xiaomimimo.com）
+腾讯混元:  T1=hy3（混元3代旗舰）      T2=hy4-preview（混元4代预览版）
+           两者同属一个 Token Plan，共用 URL 和 API Key，录一次即可
+默认选中 D1（deepseek-v4-pro），直接回车即可
+
+【Token Plan / Coding Plan 说明】
+- MiniMax / 小米 MiMo 的订阅 Key（Token Plan）与按量 API Key 相互独立，互不通用
+- 汇聚模式（菜单 6）两种 Key 都录入后，会询问「默认用哪种计费」，
+  选择结果存入 auth.json（BILLING_PREF_*），网关按此路由
+- MiniMax Token Plan 与按量 API 共用 api.minimaxi.com，仅 Key 不同
+- 小米 MiMo Token Plan 走专属网关 https://token-plan-cn.xiaomimimo.com/v1（中国集群），
+  与按量 https://api.xiaomimimo.com/v1 完全独立，Key 为 tp- 开头
+
+【GLM Coding Plan 套餐说明】
+- G1=glm-5.3（旗舰）、G3=glm-5.3-flash（多模态轻量，支持图片输入）走 GLM Coding Plan 套餐额度，
+  与标准 API（G2=glm-5.3 / G4=glm-5.3-flash）相互独立，relay 转发端点
+  https://open.bigmodel.cn/api/coding/paas/v4（OpenAI Chat 协议）
+- 套餐 Key 在「个人编程套餐 > 套餐概览」新建（团队版走「团队编程套餐 > 我的套餐」）
+- 套餐额度仅限官方支持的编码工具（Codex 在列）使用，自建应用不能使用套餐额度
+- 标准 API（G2=glm-5.3 / G4=glm-5.3-flash）端点仍为 https://open.bigmodel.cn/api/paas/v4，
+  用普通 ZHIPU_API_KEY 按量计费；glm-5.3-flash 标准 API 限时五折（输入 ¥0.4/输出 ¥1.4 每 M token）
+
+【腾讯混元 Token Plan 说明】
+- T1=hy3 / T2=hy4-preview 同属一个 Token Plan，共用端点
+  https://api.lkeap.cloud.tencent.com/plan/v3 与同一把 API Key
+- Key 在 https://console.cloud.tencent.com/lkeap/api 创建，两个模型录一次即可
+
+【MiniMax Think Filter】
+Mac 脚本已内置 think-filter，自动处理：
+- 去除 <think> / <thought> 思考标签（跨流式事件）
+- 去除 reasoning_content 等内部字段
+- 强制使用中文输出
+- 禁用推理思考模式（减少静默等待）
+
+【关于 MiniMax M3 速度】
+MiniMax M3 是推理模型，内部思考阶段不输出任何内容：
+- 简单问题：约 6-7 秒出第一个字
+- 复杂问题：可能 10-30 秒静默思考
+- 非卡死！请耐心等待，思考结束会自动出结果
