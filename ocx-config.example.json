@@ -1,0 +1,131 @@
+{
+  "default_provider": "deepseek",
+  "providers": {
+    "openai": {
+      "alias": "openai",
+      "disabled": false,
+      "default_model": "gpt-5.1-codex",
+      "models": [
+        "gpt-5.1-codex",
+        "gpt-5",
+        "o4-mini",
+        "orcarouter/codex"
+      ]
+    },
+    "deepseek": {
+      "alias": "deepseek",
+      "disabled": false,
+      "default_model": "deepseek-chat",
+      "models": [
+        "deepseek-chat",
+        "deepseek-reasoner"
+      ],
+      "aliases": {
+        "ds-chat": "deepseek-chat",
+        "ds-reason": "deepseek-reasoner"
+      }
+    },
+    "openrouter": {
+      "alias": "openrouter",
+      "disabled": false,
+      "default_model": "anthropic/claude-sonnet-4",
+      "models": [
+        "anthropic/claude-sonnet-4",
+        "openai/gpt-5",
+        "deepseek/deepseek-chat"
+      ],
+      "aliases": {
+        "claude-sonnet": "anthropic/claude-sonnet-4"
+      }
+    },
+    "anthropic": {
+      "alias": "anthropic",
+      "disabled": true,
+      "models": [
+        "claude-sonnet-4",
+        "claude-opus-4"
+      ]
+    },
+    "groq": {
+      "alias": "groq",
+      "disabled": false,
+      "models": [
+        "llama-3.3-70b",
+        "mixtral-8x7b"
+      ]
+    }
+  },
+  "model_provider_patterns": [
+    {
+      "providers": [
+        "anthropic"
+      ],
+      "prefixes": [
+        "claude-sonnet-",
+        "claude-opus-",
+        "claude-haiku-",
+        "claude-"
+      ]
+    },
+    {
+      "providers": [
+        "groq"
+      ],
+      "prefixes": [
+        "llama-",
+        "mixtral-",
+        "gemma-"
+      ]
+    }
+  ],
+  "combos": {
+    "fs-combo": {
+      "strategy": "round-robin",
+      "sticky_limit": 2,
+      "cooldown_seconds": 8,
+      "targets": [
+        {
+          "provider": "deepseek",
+          "model": "deepseek-chat",
+          "weight": 2
+        },
+        {
+          "provider": "openrouter",
+          "model": "anthropic/claude-sonnet-4",
+          "weight": 1
+        },
+        {
+          "provider": "groq",
+          "model": "llama-3.3-70b",
+          "weight": 1
+        }
+      ]
+    },
+    "ds-alternate": {
+      "strategy": "random",
+      "sticky_limit": 1,
+      "cooldown_seconds": 5,
+      "targets": [
+        {
+          "provider": "deepseek",
+          "model": "deepseek-chat",
+          "weight": 3
+        },
+        {
+          "provider": "deepseek",
+          "model": "deepseek-reasoner",
+          "weight": 1
+        },
+        {
+          "provider": "openrouter",
+          "model": "deepseek/deepseek-chat",
+          "weight": 1
+        }
+      ]
+    }
+  },
+  "combo_aliases": {
+    "fs-test": "fs-combo",
+    "ds-alternate": "ds-alternate"
+  }
+}
